@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIयुष - Advanced Healthcare Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+</head>
+<body>
+    <!-- Language Selector -->
+    <div id="google_translate_element" aria-label="Language Selector"></div>
+   
+    <!-- Emergency Contact Button -->
+    <div class="emergency-btn" onclick="toggleEmergencyModal()">
+        <i class="bi bi-plus-circle-fill"></i>
+        <span class="emergency-tooltip">Emergency Contact</span>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div class="emergency-modal" id="emergencyModal">
+        <div class="emergency-content">
+            <button class="emergency-close" onclick="toggleEmergencyModal()">
+                <i class="bi bi-x"></i>
+            </button>
+            <div class="emergency-header">
+                <i class="bi bi-exclamation-triangle"></i>
+                <h3>Emergency Services</h3>
+            </div>
+            <div class="emergency-options">
+                <div class="emergency-option">
+                    <i class="bi bi-telephone-fill"></i>
+                    <h4>Call Emergency</h4>
+                    <p>Immediate Medical Help</p>
+                </div>
+                <div class="emergency-option">
+                    <i class="bi bi-hospital"></i>
+                    <h4>Find Hospital</h4>
+                    <p>Nearest Emergency Room</p>
+                </div>
+                <div class="emergency-option">
+                    <i class="bi bi-chat-dots"></i>
+                    <h4>Online Support</h4>
+                    <p>24/7 Medical Assistance</p>
+                </div>
+                <div class="emergency-option">
+                    <i class="bi bi-ambulance"></i>
+                    <h4>Ambulance</h4>
+                    <p>Emergency Transport</p>
+                </div>
+            </div>
+            <div class="emergency-contact">
+                <p><i class="bi bi-telephone"></i> Emergency: <strong>100</strong></p>
+                <p><i class="bi bi-headset"></i> Helpline: <strong>+91 9639585170</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-heart-pulse"></i>
+                <span>AIयुष</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">
+                            <i class="bi bi-grid me-1"></i>Features
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">
+                            <i class="bi bi-gear me-1"></i>Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">
+                            <i class="bi bi-info-circle me-1"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">
+                            <i class="bi bi-envelope me-1"></i>Contact
+                        </a>
+                    </li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn-auth btn-login">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                    </a>
+                    <a href="signup.html" class="btn-auth btn-signup">
+                        <i class="bi bi-person-plus me-1"></i>Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-lg-start hero-content">
+                    <h1 class="display-4 fw-bold">
+                        <span class="text-white">AI</span>युष
+                    </h1>
+                    <p class="lead">Experience the future of healthcare with our AI-powered medical analysis.</p>
+                    <div class="hero-buttons">
+                        <a href="signup.html" class="hero-btn btn-get-started">
+                            <i class="bi bi-rocket-takeoff"></i>
+                            Get Started
+                        </a>
+                        <a href="#features" class="hero-btn btn-learn-more">
+                            <i class="bi bi-arrow-right-circle"></i>
+                            Learn More
+                        </a>
+                        <a href="hospital.html" class="hero-btn btn-add-hospital">
+                            <i class="bi bi-hospital"></i>
+                            Add Hospital
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image">
+                        <img src="freepik__upload__89551.jpg" alt="Healthcare Platform" class="img-fluid rounded-3 mt-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="text-center section-title">Powerful Features</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="bi bi-robot"></i>
+                        <h3>AI-Powered Analysis</h3>
+                        <p>Advanced machine learning models for accurate medical diagnosis and analysis with 98% accuracy rate.</p>
+                        <div class="feature-stats mt-3">
+                            <span class="badge bg-primary">98% Accuracy</span>
+                            <span class="badge bg-info">24/7 Available</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="bi bi-calendar-check"></i>
+                        <h3>Smart Appointments</h3>
+                        <p>Efficient appointment scheduling with automated reminders and real-time availability updates.</p>
+                        <div class="feature-stats mt-3">
+                            <span class="badge bg-primary">Instant Booking</span>
+                            <span class="badge bg-info">Smart Reminders</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="bi bi-file-medical"></i>
+                        <h3>Digital Reports</h3>
+                        <p>Secure digital reports with instant sharing capabilities and encrypted storage.</p>
+                        <div class="feature-stats mt-3">
+                            <span class="badge bg-primary">256-bit Encryption</span>
+                            <span class="badge bg-info">Instant Access</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2 class="text-center section-title">Our Services</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card">
+                        <img src="brain-tumor.png" alt="Brain Tumor Detection" class="img-fluid">
+                        <h4>Brain Tumor Detection</h4>
+                        <p>AI-powered brain tumor detection with advanced imaging analysis.</p>
+                        <div class="service-stats">
+                            <div class="stat-item">
+                                <div class="number">99%</div>
+                                <div class="label">Accuracy</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="number">2min</div>
+                                <div class="label">Processing</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card">
+                        <img src="retinal-analysis.png" alt="Retinal Analysis" class="img-fluid">
+                        <h4>Retinal Analysis</h4>
+                        <p>Advanced diabetic retinopathy detection and analysis.</p>
+                        <div class="service-stats">
+                            <div class="stat-item">
+                                <div class="number">98%</div>
+                                <div class="label">Accuracy</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="number">1min</div>
+                                <div class="label">Processing</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card">
+                        <img src="lung-cancer.png" alt="Lung Cancer Detection" class="img-fluid">
+                        <h4>Lung Cancer Detection</h4>
+                        <p>Early-stage lung cancer identification system.</p>
+                        <div class="service-stats">
+                            <div class="stat-item">
+                                <div class="number">97%</div>
+                                <div class="label">Accuracy</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="number">3min</div>
+                                <div class="label">Processing</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card">
+                        <img src="management.png" alt="Patient Management" class="img-fluid">
+                        <h4>Patient Management</h4>
+                        <p>Comprehensive patient care and monitoring system.</p>
+                        <div class="service-stats">
+                            <div class="stat-item">
+                                <div class="number">24/7</div>
+                                <div class="label">Support</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="number">100k+</div>
+                                <div class="label">Patients</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <img src="rb_2148490677.png" alt="About Us" class="img-fluid rounded-3">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="section-title">About AIयुष</h2>
+                    <p class="lead">Revolutionizing healthcare through advanced technology and artificial intelligence.</p>
+                    <p>Our platform combines cutting-edge ML models with user-friendly interfaces to provide accurate medical analysis and efficient patient management.</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="bi bi-check-circle stat-icon"></i>
+                            <div class="stat-number" data-count="85">85%</div>
+                            <p class="stat-label">Accuracy Rate</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="bi bi-people stat-icon"></i>
+                            <div class="stat-number" data-count="10000">10k+</div>
+                            <p class="stat-label">Active Users</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="bi bi-hospital stat-icon"></i>
+                            <div class="stat-number" data-count="50">50+</div>
+                            <p class="stat-label">Partner Hospitals</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="bi bi-award stat-icon"></i>
+                            <div class="stat-number" data-count="15">15+</div>
+                            <p class="stat-label">Awards Won</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="text-center section-title">Get in Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="name" placeholder=" ">
+                                <label class="form-label" for="name">Your Name</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="email" placeholder=" ">
+                                <label class="form-label" for="email">Email Address</label>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" id="subject">
+                                    <option value="">Select Subject</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="support">Technical Support</option>
+                                    <option value="partnership">Partnership</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" id="message" rows="4" placeholder=" "></textarea>
+                                <label class="form-label" for="message">Your Message</label>
+                            </div>
+                            <button type="submit" class="contact-btn">
+                                <i class="bi bi-send me-2"></i>Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-brand">
+                        <i class="bi bi-heart-pulse"></i>
+                        <h3>AIयुष</h3>
+                        <p>Advanced healthcare platform powered by AI</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="footer-links">
+                        <h5>Quick Links</h5>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-links">
+                        <h5>Our Services</h5>
+                        <ul>
+                            <li><a href="#">Brain Tumor Detection</a></li>
+                            <li><a href="#">Retinal Analysis</a></li>
+                            <li><a href="#">Lung Cancer Detection</a></li>
+                            <li><a href="#">Patient Management</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-links">
+                        <h5>Contact Info</h5>
+                        <ul>
+                            <li><i class="bi bi-geo-alt me-2"></i>GMS Road Dehradun</li>
+                            <li><i class="bi bi-envelope me-2"></i>yadurajsingham@gmail.com</li>
+                            <li><i class="bi bi-phone me-2"></i>+91 9639585170</li>
+                            <li><i class="bi bi-clock me-2"></i>24/7 Support Available</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AIयुष. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+    // Emergency Modal Toggle
+    function toggleEmergencyModal() {
+        const modal = document.getElementById('emergencyModal');
+        modal.classList.toggle('active');
+    }
+    </script>
+</body>
+</html>

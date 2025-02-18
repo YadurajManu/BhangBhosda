@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - AIयुष</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card signup-card">
+            <div class="auth-image"></div>
+            <div class="auth-form">
+                <div class="auth-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2966/2966327.png" alt="AIयुष Logo">
+                    <h2>Create Account</h2>
+                    <p class="text-muted">Join AIयुष today!</p>
+                </div>
+
+                <div class="signup-progress">
+                    <div class="progress-step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <span>Basic Info</span>
+                    </div>
+                    <div class="progress-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <span>Details</span>
+                    </div>
+                    <div class="progress-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <span>Finish</span>
+                    </div>
+                </div>
+
+                <form id="signupForm" class="needs-validation" novalidate>
+                    <!-- Step 1: Basic Information -->
+                    <div class="form-step active" data-step="1">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                                    <label for="firstName">First Name</label>
+                                    <div class="invalid-feedback">Please enter your first name</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                                    <label for="lastName">Last Name</label>
+                                    <div class="invalid-feedback">Please enter your last name</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                            <label for="email">Email Address</label>
+                            <div class="invalid-feedback">Please enter a valid email address</div>
+                        </div>
+
+                        <div class="form-floating">
+                            <input type="tel" class="form-control" id="phone" placeholder="Phone Number" required>
+                            <label for="phone">Phone Number</label>
+                            <div class="invalid-feedback">Please enter a valid phone number</div>
+                        </div>
+
+                        <button type="button" class="auth-btn next-step">Continue <i class="bi bi-arrow-right"></i></button>
+                    </div>
+
+                    <!-- Step 2: Additional Details -->
+                    <div class="form-step" data-step="2">
+                        <div class="form-floating">
+                            <select class="form-select" id="role" required onchange="toggleDoctorFields(this.value)">
+                                <option value="">Select Role</option>
+                                <option value="patient">Patient</option>
+                                <option value="doctor">Doctor</option>
+                            </select>
+                            <label for="role">I am a</label>
+                        </div>
+
+                        <div id="doctorFields" style="display: none;">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="licenseNumber" placeholder="License Number">
+                                <label for="licenseNumber">Medical License Number</label>
+                            </div>
+
+                            <div class="form-floating">
+                                <select class="form-select" id="specialization">
+                                    <option value="">Select Specialization</option>
+                                    <option value="neurology">Neurology</option>
+                                    <option value="cardiology">Cardiology</option>
+                                    <option value="orthopedics">Orthopedics</option>
+                                    <option value="pediatrics">Pediatrics</option>
+                                    <option value="general">General Medicine</option>
+                                </select>
+                                <label for="specialization">Specialization</label>
+                            </div>
+                        </div>
+
+                        <div class="password-section">
+                            <div class="form-floating password-container">
+                                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                                <label for="password">Password</label>
+                                <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                    <i class="bi bi-eye-slash-fill"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-meter">
+                                    <div class="strength-bar"></div>
+                                </div>
+                                <div class="strength-text">Password Strength: <span>Weak</span></div>
+                            </div>
+                        </div>
+
+                        <div class="form-floating password-container">
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                            <label for="confirmPassword">Confirm Password</label>
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                <i class="bi bi-eye-slash-fill"></i>
+                            </button>
+                        </div>
+
+                        <div class="step-buttons">
+                            <button type="button" class="auth-btn prev-step"><i class="bi bi-arrow-left"></i> Back</button>
+                            <button type="button" class="auth-btn next-step">Continue <i class="bi bi-arrow-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Final Step -->
+                    <div class="form-step" data-step="3">
+                        <div class="form-check terms-check">
+                            <input class="form-check-input" type="checkbox" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                I agree to the <a href="#" class="terms-link">Terms & Conditions</a> and <a href="#" class="terms-link">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <div class="verification-section">
+                            <div class="verification-icon">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <h4>Verify Your Account</h4>
+                            <p>We'll send a verification code to your email to ensure it's really you.</p>
+                        </div>
+
+                        <div class="step-buttons">
+                            <button type="button" class="auth-btn prev-step"><i class="bi bi-arrow-left"></i> Back</button>
+                            <button type="submit" class="auth-btn create-account">
+                                <i class="bi bi-person-plus"></i> Create Account
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="auth-links">
+                    <span class="text-muted">Already have an account?</span>
+                    <a href="login.html">Login here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Password Toggle Function
+        function togglePassword(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleButton = passwordInput.nextElementSibling.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleButton.classList.remove('bi-eye-slash-fill');
+                toggleButton.classList.add('bi-eye-fill');
+            } else {
+                passwordInput.type = 'password';
+                toggleButton.classList.remove('bi-eye-fill');
+                toggleButton.classList.add('bi-eye-slash-fill');
+            }
+        }
+
+        // Password Strength Checker
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBar = document.querySelector('.strength-bar');
+            const strengthText = document.querySelector('.strength-text span');
+            
+            let strength = 0;
+            if (password.match(/[a-z]/)) strength++;
+            if (password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+            if (password.length >= 8) strength++;
+
+            switch(strength) {
+                case 0:
+                case 1:
+                    strengthBar.style.width = '20%';
+                    strengthBar.style.backgroundColor = '#ff4d4d';
+                    strengthText.textContent = 'Weak';
+                    break;
+                case 2:
+                case 3:
+                    strengthBar.style.width = '50%';
+                    strengthBar.style.backgroundColor = '#ffd700';
+                    strengthText.textContent = 'Medium';
+                    break;
+                case 4:
+                case 5:
+                    strengthBar.style.width = '100%';
+                    strengthBar.style.backgroundColor = '#00cc00';
+                    strengthText.textContent = 'Strong';
+                    break;
+            }
+        });
+
+        // Multi-step Form Navigation
+        const formSteps = document.querySelectorAll('.form-step');
+        const progressSteps = document.querySelectorAll('.progress-step');
+        const nextButtons = document.querySelectorAll('.next-step');
+        const prevButtons = document.querySelectorAll('.prev-step');
+        let currentStep = 1;
+
+        nextButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (validateStep(currentStep)) {
+                    currentStep++;
+                    updateFormSteps();
+                    updateProgressBar();
+                }
+            });
+        });
+
+        prevButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                currentStep--;
+                updateFormSteps();
+                updateProgressBar();
+            });
+        });
+
+        function updateFormSteps() {
+            formSteps.forEach(step => {
+                step.classList.remove('active');
+                if (step.dataset.step == currentStep) {
+                    step.classList.add('active');
+                }
+            });
+        }
+
+        function updateProgressBar() {
+            progressSteps.forEach(step => {
+                step.classList.remove('active');
+                if (step.dataset.step <= currentStep) {
+                    step.classList.add('active');
+                }
+            });
+        }
+
+        function validateStep(step) {
+            const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
+            const inputs = currentStepElement.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.value) {
+                    isValid = false;
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+
+            return isValid;
+        }
+
+        // Toggle Doctor Fields
+        function toggleDoctorFields(role) {
+            const doctorFields = document.getElementById('doctorFields');
+            doctorFields.style.display = role === 'doctor' ? 'block' : 'none';
+        }
+
+        // Form Submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitButton = document.querySelector('.create-account');
+            const originalButtonText = submitButton.innerHTML;
+            
+            // Show loading state
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Creating Account...';
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Show success message
+                const formContent = this.innerHTML;
+                this.innerHTML = `
+                    <div class="success-message">
+                        <div class="success-icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <h3>Account Created Successfully!</h3>
+                        <p>Please check your email to verify your account.</p>
+                        <a href="login.html" class="auth-btn mt-3">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Proceed to Login
+                        </a>
+                    </div>
+                `;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
