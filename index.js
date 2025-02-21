@@ -155,4 +155,104 @@ function addMessage(sender, text) {
 }
 
 // Initialize chatbot when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeChatbot); 
+document.addEventListener('DOMContentLoaded', initializeChatbot);
+
+// Contact Form Handling
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize FAQ accordion
+    const faqs = [
+        {
+            question: "How can I schedule an appointment?",
+            answer: "You can schedule an appointment through our online booking system, mobile app, or by calling our helpline at +91 9639585170."
+        },
+        {
+            question: "What services do you offer?",
+            answer: "We offer various AI-powered medical services including brain tumor detection, retinal analysis, lung cancer detection, and comprehensive patient management."
+        },
+        {
+            question: "How accurate are your AI diagnostics?",
+            answer: "Our AI models achieve 98% accuracy in medical diagnostics, backed by extensive testing and validation by medical professionals."
+        },
+        {
+            question: "Is my medical data secure?",
+            answer: "Yes, we implement state-of-the-art security measures and comply with healthcare data protection regulations to ensure your information is safe."
+        }
+    ];
+
+    // Populate FAQ accordion
+    const faqAccordion = document.getElementById('faqAccordion');
+    faqs.forEach((faq, index) => {
+        faqAccordion.innerHTML += `
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button ${index === 0 ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#faq${index}">
+                        ${faq.question}
+                    </button>
+                </h2>
+                <div id="faq${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        ${faq.answer}
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    // Form validation and submission
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = this.querySelector('.btn-submit');
+            const originalBtnText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = `
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Sending...
+            `;
+            submitBtn.disabled = true;
+
+            try {
+                // Simulate form submission
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Show success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Message Sent!',
+                    text: 'We will get back to you soon.',
+                    confirmButtonColor: '#0d6efd'
+                });
+
+                // Reset form
+                contactForm.reset();
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong! Please try again.',
+                    confirmButtonColor: '#0d6efd'
+                });
+            } finally {
+                // Restore button state
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+
+    // Add floating labels animation
+    const formControls = document.querySelectorAll('.form-control, .form-select');
+    formControls.forEach(control => {
+        control.addEventListener('focus', () => {
+            control.parentElement.classList.add('focused');
+        });
+        control.addEventListener('blur', () => {
+            if (!control.value) {
+                control.parentElement.classList.remove('focused');
+            }
+        });
+    });
+}); 

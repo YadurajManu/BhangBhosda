@@ -294,38 +294,128 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Enhanced Contact Section -->
     <section id="contact" class="contact-section">
         <div class="container">
-            <h2 class="text-center section-title">Get in Touch</h2>
+            <div class="contact-header text-center mb-5">
+                <span class="contact-subtitle">Get in Touch</span>
+                <h2 class="contact-title">How Can We Help You?</h2>
+                <p class="contact-description">Have questions about our services? We're here to help 24/7</p>
+            </div>
+
             <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="contact-form">
-                        <form id="contactForm">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="name" placeholder=" ">
-                                <label class="form-label" for="name">Your Name</label>
+                <!-- Contact Information Cards -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="contact-info-card">
+                        <div class="card-icon">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <h3>Visit Us</h3>
+                        <p>GMS Road, Dehradun</p>
+                        <p>Uttarakhand, India</p>
+                        <a href="https://maps.google.com" target="_blank" class="direction-link">
+                            Get Directions <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="contact-info-card">
+                        <div class="card-icon">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                        <h3>Call Us</h3>
+                        <p>24/7 Helpline: +91 9639585170</p>
+                        <p>Emergency: 100</p>
+                        <a href="tel:+919639585170" class="call-link">
+                            Call Now <i class="bi bi-telephone"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="contact-info-card">
+                        <div class="card-icon">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <h3>Email Us</h3>
+                        <p>Support: yadurajsingham@gmail.com</p>
+                        <p>Info: info@aiyush.com</p>
+                        <a href="mailto:yadurajsingham@gmail.com" class="email-link">
+                            Send Email <i class="bi bi-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="col-lg-8">
+                    <div class="contact-form-card">
+                        <form id="contactForm" class="contact-form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                                        <label for="name">Your Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                                        <label for="email">Email Address</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="email" placeholder=" ">
-                                <label class="form-label" for="email">Email Address</label>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="tel" class="form-control" id="phone" placeholder="Phone Number">
+                                        <label for="phone">Phone Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="subject" required>
+                                            <option value="">Select Subject</option>
+                                            <option value="general">General Inquiry</option>
+                                            <option value="appointment">Book Appointment</option>
+                                            <option value="support">Technical Support</option>
+                                            <option value="feedback">Feedback</option>
+                                        </select>
+                                        <label for="subject">Subject</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <select class="form-control" id="subject">
-                                    <option value="">Select Subject</option>
-                                    <option value="general">General Inquiry</option>
-                                    <option value="support">Technical Support</option>
-                                    <option value="partnership">Partnership</option>
-                                </select>
+
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="message" placeholder="Your Message" style="height: 150px" required></textarea>
+                                <label for="message">Your Message</label>
                             </div>
-                            <div class="form-group">
-                                <textarea class="form-control" id="message" rows="4" placeholder=" "></textarea>
-                                <label class="form-label" for="message">Your Message</label>
+
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="privacy" required>
+                                <label class="form-check-label" for="privacy">
+                                    I agree to the privacy policy and terms of service
+                                </label>
                             </div>
-                            <button type="submit" class="contact-btn">
-                                <i class="bi bi-send me-2"></i>Send Message
+
+                            <button type="submit" class="btn-submit">
+                                <span>Send Message</span>
+                                <i class="bi bi-send"></i>
                             </button>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section mt-5">
+                <h3 class="text-center mb-4">Frequently Asked Questions</h3>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="accordion" id="faqAccordion">
+                            <!-- FAQ items will be added dynamically -->
+                        </div>
                     </div>
                 </div>
             </div>
