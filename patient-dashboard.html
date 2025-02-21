@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - AIयुष</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="hospital.css">
+    <link rel="stylesheet" href="patient-dashboard.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-hospital-alt"></i>
+                <span>AIयुष</span>
+            </a>
+            <div class="nav-links">
+                <a href="#overview" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#appointments" class="nav-link">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Appointments</span>
+                </a>
+                <a href="#medical-records" class="nav-link">
+                    <i class="fas fa-file-medical"></i>
+                    <span>Medical Records</span>
+                </a>
+                <a href="#prescriptions" class="nav-link">
+                    <i class="fas fa-prescription"></i>
+                    <span>Prescriptions</span>
+                </a>
+            </div>
+            <div class="profile-section">
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">2</span>
+                </div>
+                <div class="profile-dropdown">
+                    <img src="" alt="" class="profile-image">
+                    <span class="profile-name"></span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-content">
+        <!-- Overview Section -->
+        <section id="overview" class="dashboard-section">
+            <div class="section-header">
+                <h2>Health Overview</h2>
+                <div class="quick-actions">
+                    <button class="action-btn emergency">
+                        <i class="fas fa-phone-alt"></i>
+                        Emergency Contact
+                    </button>
+                    <button class="action-btn book">
+                        <i class="fas fa-calendar-plus"></i>
+                        Book Appointment
+                    </button>
+                </div>
+            </div>
+
+            <div class="health-stats-grid">
+                <div class="health-card">
+                    <div class="health-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="health-details">
+                        <h3>Next Appointment</h3>
+                        <p class="health-value">Feb 25, 2024</p>
+                        <span class="health-info">Dr. Sarah Smith</span>
+                    </div>
+                </div>
+
+                <div class="health-card">
+                    <div class="health-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="health-details">
+                        <h3>Active Medications</h3>
+                        <p class="health-value">3</p>
+                        <span class="health-info">Next refill in 5 days</span>
+                    </div>
+                </div>
+
+                <div class="health-card">
+                    <div class="health-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <div class="health-details">
+                        <h3>Recent Reports</h3>
+                        <p class="health-value">2</p>
+                        <span class="health-info">View all reports</span>
+                    </div>
+                </div>
+
+                <div class="health-card">
+                    <div class="health-icon">
+                        <i class="fas fa-notes-medical"></i>
+                    </div>
+                    <div class="health-details">
+                        <h3>Health Score</h3>
+                        <p class="health-value">85%</p>
+                        <span class="health-info positive">↑ 5% this month</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="activity-section">
+                <div class="section-header">
+                    <h3>Recent Activity</h3>
+                    <button class="view-all-btn">View All</button>
+                </div>
+                <div class="activity-timeline" id="activityTimeline">
+                    <!-- Activities will be dynamically added here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Appointments Section -->
+        <section id="appointments" class="dashboard-section">
+            <div class="section-header">
+                <h2>My Appointments</h2>
+                <div class="section-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search appointments...">
+                    </div>
+                    <button class="primary-btn" onclick="bookNewAppointment()">
+                        <i class="fas fa-plus"></i>
+                        New Appointment
+                    </button>
+                </div>
+            </div>
+
+            <div class="appointments-tabs">
+                <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
+                <button class="tab-btn" data-tab="past">Past</button>
+                <button class="tab-btn" data-tab="cancelled">Cancelled</button>
+            </div>
+
+            <div class="appointments-grid" id="appointmentsGrid">
+                <!-- Appointments will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Medical Records Section -->
+        <section id="medical-records" class="dashboard-section">
+            <div class="section-header">
+                <h2>Medical Records</h2>
+                <div class="section-actions">
+                    <div class="filter-dropdown">
+                        <select>
+                            <option value="all">All Records</option>
+                            <option value="reports">Test Reports</option>
+                            <option value="prescriptions">Prescriptions</option>
+                            <option value="imaging">Imaging</option>
+                        </select>
+                    </div>
+                    <button class="primary-btn" onclick="uploadRecord()">
+                        <i class="fas fa-upload"></i>
+                        Upload Record
+                    </button>
+                </div>
+            </div>
+
+            <div class="records-grid" id="recordsGrid">
+                <!-- Records will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Prescriptions Section -->
+        <section id="prescriptions" class="dashboard-section">
+            <div class="section-header">
+                <h2>Active Prescriptions</h2>
+                <button class="primary-btn" onclick="requestRefill()">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                    Request Refill
+                </button>
+            </div>
+
+            <div class="prescriptions-grid" id="prescriptionsGrid">
+                <!-- Prescriptions will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal" id="appointmentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Book New Appointment</h3>
+                <button class="close-btn" onclick="closeModal('appointmentModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="appointmentForm">
+                    <div class="form-group">
+                        <label>Specialty</label>
+                        <select name="specialty" required>
+                            <option value="">Select Specialty</option>
+                            <option value="cardiology">Cardiology</option>
+                            <option value="dermatology">Dermatology</option>
+                            <option value="neurology">Neurology</option>
+                            <option value="orthopedics">Orthopedics</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Doctor</label>
+                        <select name="doctorId" required>
+                            <option value="">Select Doctor</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Time</label>
+                            <select name="time" required>
+                                <option value="">Select Time</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Reason for Visit</label>
+                        <textarea name="reason" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" onclick="closeModal('appointmentModal')">Cancel</button>
+                <button class="primary-btn" onclick="saveAppointment()">Book Appointment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div class="notifications-panel" id="notificationsPanel">
+        <div class="panel-header">
+            <h3>Notifications</h3>
+            <button class="clear-btn" onclick="clearAllNotifications()">
+                Clear All
+            </button>
+        </div>
+        <div class="notifications-list">
+            <!-- Notifications will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profileMenu">
+        <div class="menu-header">
+            <img src="" alt="" class="profile-image">
+            <div>
+                <h4 class="profile-name"></h4>
+                <p class="profile-info"></p>
+            </div>
+        </div>
+        <div class="menu-items">
+            <a href="#" onclick="viewProfile()">
+                <i class="fas fa-user"></i> View Profile
+            </a>
+            <a href="#" onclick="editProfile()">
+                <i class="fas fa-edit"></i> Edit Profile
+            </a>
+            <a href="#" onclick="viewSettings()">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+            <a href="#" onclick="logout()" class="logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="patient-data.js"></script>
+    <script src="patient-dashboard.js"></script>
+</body>
+</html> 
