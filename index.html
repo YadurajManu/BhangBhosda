@@ -129,7 +129,19 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="hero-image">
-                        <img src="freepik__upload__89551.jpg" alt="Healthcare Platform" class="img-fluid rounded-3 mt-4">
+                        <img 
+                            src="low-res-placeholder.jpg"
+                            data-src="high-res-image.jpg"
+                            srcset="image-300w.jpg 300w,
+                                    image-600w.jpg 600w,
+                                    image-900w.jpg 900w"
+                            sizes="(max-width: 768px) 100vw,
+                                   (max-width: 1200px) 50vw,
+                                   33vw"
+                            loading="lazy"
+                            alt="Healthcare Platform"
+                            class="lazy-image img-fluid rounded-3 mt-4"
+                        >
                     </div>
                 </div>
             </div>

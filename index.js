@@ -255,4 +255,175 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+});
+
+// Pull to Refresh Implementation
+function initializePullToRefresh() {
+    let touchStart = 0;
+    let touchMove = 0;
+    const refreshThreshold = 150;
+    const refreshIndicator = document.createElement('div');
+    refreshIndicator.className = 'pull-refresh-indicator';
+    document.body.appendChild(refreshIndicator);
+
+    document.addEventListener('touchstart', (e) => {
+        touchStart = e.touches[0].clientY;
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+        touchMove = e.touches[0].clientY;
+        const pull = touchMove - touchStart;
+
+        if (window.scrollY === 0 && pull > 0) {
+            refreshIndicator.style.transform = `translateY(${Math.min(pull / 2, refreshThreshold)}px)`;
+            e.preventDefault();
+        }
+    });
+
+    document.addEventListener('touchend', () => {
+        if (touchMove - touchStart > refreshThreshold) {
+            // Trigger refresh animation
+            refreshIndicator.classList.add('refreshing');
+            
+            // Reload page content
+            window.location.reload();
+        } else {
+            // Reset indicator position
+            refreshIndicator.style.transform = 'translateY(0)';
+        }
+    });
+}
+
+// Add the styles for pull-to-refresh
+const style = document.createElement('style');
+style.textContent = `
+    .pull-refresh-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(13, 110, 253, 0.1);
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        z-index: 9999;
+    }
+
+    .pull-refresh-indicator::after {
+        content: '↻';
+        font-size: 24px;
+        color: #0d6efd;
+        animation: rotate 1s linear infinite;
+    }
+
+    .pull-refresh-indicator.refreshing {
+        transform: translateY(0);
+    }
+
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(style);
+
+// Mobile Gesture Handlers
+function initializeMobileGestures() {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    const gestureZone = document.body;
+
+    gestureZone.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    gestureZone.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].clientX;
+        touchEndY = e.changedTouches[0].clientY;
+        handleGesture();
+    }, { passive: true });
+
+    function handleGesture() {
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+        const minSwipeDistance = 100;
+
+        // Detect horizontal swipe
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (Math.abs(deltaX) > minSwipeDistance) {
+                if (deltaX > 0) {
+                    // Swipe right - Go back
+                    if (window.history.length > 1) {
+                        window.history.back();
+                    }
+                } else {
+                    // Swipe left - Show menu
+                    const navbar = document.querySelector('.navbar-collapse');
+                    if (navbar) {
+                        navbar.classList.add('show');
+                    }
+                }
+            }
+        }
+        // Detect vertical swipe
+        else {
+            if (Math.abs(deltaY) > minSwipeDistance) {
+                if (deltaY < 0 && window.scrollY > 300) {
+                    // Swipe up - Show "back to top"
+                    showBackToTop();
+                }
+            }
+        }
+    }
+
+    // Double tap handler
+    let lastTap = 0;
+    document.addEventListener('touchend', (e) => {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        if (tapLength < 500 && tapLength > 0) {
+            // Double tap detected
+            handleDoubleTap(e);
+        }
+        lastTap = currentTime;
+    });
+
+    function handleDoubleTap(e) {
+        // Prevent double tap zoom on iOS
+        e.preventDefault();
+        
+        // Implement custom double tap behavior
+        if (e.target.closest('.feature-card, .service-card')) {
+            e.target.closest('.feature-card, .service-card').classList.add('card-focus');
+        }
+    }
+}
+
+// Back to Top functionality
+function showBackToTop() {
+    const backToTop = document.createElement('button');
+    backToTop.className = 'back-to-top';
+    backToTop.innerHTML = '↑';
+    document.body.appendChild(backToTop);
+
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    setTimeout(() => backToTop.remove(), 3000);
+}
+
+// Initialize mobile features
+document.addEventListener('DOMContentLoaded', () => {
+    if ('ontouchstart' in window) {
+        initializePullToRefresh();
+        initializeMobileGestures();
+    }
 }); 
