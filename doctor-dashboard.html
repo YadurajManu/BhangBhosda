@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - AIयुष</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="hospital.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-hospital-alt"></i>
+                <span>AIयुष</span>
+            </a>
+            <div class="nav-links">
+                <a href="#overview" class="nav-link active">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#appointments" class="nav-link">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Appointments</span>
+                </a>
+                <a href="#patients" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>Patients</span>
+                </a>
+                <a href="#schedule" class="nav-link">
+                    <i class="fas fa-clock"></i>
+                    <span>Schedule</span>
+                </a>
+            </div>
+            <div class="profile-section">
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="profile-dropdown">
+                    <img src="https://ui-avatars.com/api/?name=Dr.+Smith&background=0D8ABC&color=fff" alt="Dr. Smith" class="profile-image">
+                    <span class="profile-name">Dr. Smith</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-content">
+        <!-- Overview Section -->
+        <section id="overview" class="dashboard-section">
+            <div class="section-header">
+                <h2>Dashboard Overview</h2>
+                <div class="date-filter">
+                    <i class="fas fa-calendar"></i>
+                    <span>Last 30 Days</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Today's Appointments</h3>
+                        <p class="stat-number">8</p>
+                        <span class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i> 12%
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Total Patients</h3>
+                        <p class="stat-number">248</p>
+                        <span class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i> 8%
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Average Rating</h3>
+                        <p class="stat-number">4.8</p>
+                        <span class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i> 3%
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-comment-medical"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Consultations</h3>
+                        <p class="stat-number">156</p>
+                        <span class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i> 15%
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Appointments -->
+            <div class="appointments-section">
+                <div class="section-header">
+                    <h3>Upcoming Appointments</h3>
+                    <button class="view-all-btn">View All</button>
+                </div>
+                <div class="appointments-list">
+                    <!-- Appointment cards will be dynamically added here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="dashboard.js"></script>
+    <script src="doctor-data.js"></script>
+</body>
+</html> 
