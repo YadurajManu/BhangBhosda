@@ -130,10 +130,250 @@
                 </div>
             </div>
         </section>
+
+        <!-- Appointments Section -->
+        <section id="appointments" class="dashboard-section">
+            <div class="section-header">
+                <h2>Appointments</h2>
+                <div class="section-actions">
+                    <button class="filter-btn">
+                        <i class="fas fa-filter"></i>
+                        Filter
+                    </button>
+                    <button class="primary-btn" onclick="showNewAppointmentModal()">
+                        <i class="fas fa-plus"></i>
+                        New Appointment
+                    </button>
+                </div>
+            </div>
+
+            <div class="appointments-tabs">
+                <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
+                <button class="tab-btn" data-tab="today">Today</button>
+                <button class="tab-btn" data-tab="past">Past</button>
+            </div>
+
+            <div class="appointments-grid" id="appointmentsGrid">
+                <!-- Appointments will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Patients Section -->
+        <section id="patients" class="dashboard-section">
+            <div class="section-header">
+                <h2>Patients</h2>
+                <div class="section-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search patients..." id="patientSearch">
+                    </div>
+                    <button class="primary-btn" onclick="showNewPatientModal()">
+                        <i class="fas fa-user-plus"></i>
+                        Add Patient
+                    </button>
+                </div>
+            </div>
+
+            <div class="patients-grid" id="patientsGrid">
+                <!-- Patients will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section id="schedule" class="dashboard-section">
+            <div class="section-header">
+                <h2>Schedule</h2>
+                <div class="section-actions">
+                    <button class="primary-btn" onclick="showScheduleSettingsModal()">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </button>
+                </div>
+            </div>
+
+            <div class="schedule-container">
+                <div class="schedule-sidebar">
+                    <div class="calendar-widget" id="calendarWidget">
+                        <!-- Calendar will be dynamically added here -->
+                    </div>
+                    <div class="availability-hours">
+                        <h3>Working Hours</h3>
+                        <div class="hours-list">
+                            <!-- Working hours will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="schedule-content">
+                    <div class="schedule-header">
+                        <button class="nav-btn" onclick="previousWeek()">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="scheduleDate">February 19-25, 2024</h3>
+                        <button class="nav-btn" onclick="nextWeek()">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="schedule-grid" id="scheduleGrid">
+                        <!-- Schedule will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <!-- Modals -->
+    <div class="modal" id="appointmentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>New Appointment</h3>
+                <button class="close-btn" onclick="closeModal('appointmentModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="appointmentForm">
+                    <div class="form-group">
+                        <label>Patient</label>
+                        <select name="patientId" required>
+                            <option value="">Select Patient</option>
+                            <!-- Patients will be dynamically added here -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Time</label>
+                        <input type="time" name="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select name="type" required>
+                            <option value="Regular Checkup">Regular Checkup</option>
+                            <option value="Follow-up">Follow-up</option>
+                            <option value="New Patient">New Patient</option>
+                            <option value="Emergency">Emergency</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea name="notes" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" onclick="closeModal('appointmentModal')">Cancel</button>
+                <button class="primary-btn" onclick="saveAppointment()">Save Appointment</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="patientModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>New Patient</h3>
+                <button class="close-btn" onclick="closeModal('patientModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="patientForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" name="age" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select name="gender" required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Blood Group</label>
+                            <select name="bloodGroup" required>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea name="address" rows="2" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" onclick="closeModal('patientModal')">Cancel</button>
+                <button class="primary-btn" onclick="savePatient()">Save Patient</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div class="notifications-panel" id="notificationsPanel">
+        <div class="panel-header">
+            <h3>Notifications</h3>
+            <button class="clear-btn" onclick="clearAllNotifications()">
+                Clear All
+            </button>
+        </div>
+        <div class="notifications-list">
+            <!-- Notifications will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profileMenu">
+        <div class="menu-header">
+            <img src="${doctorProfile.image}" alt="${doctorProfile.name}">
+            <div>
+                <h4>${doctorProfile.name}</h4>
+                <p>${doctorProfile.specialization}</p>
+            </div>
+        </div>
+        <div class="menu-items">
+            <a href="#" onclick="viewProfile()">
+                <i class="fas fa-user"></i> View Profile
+            </a>
+            <a href="#" onclick="editProfile()">
+                <i class="fas fa-edit"></i> Edit Profile
+            </a>
+            <a href="#" onclick="viewSettings()">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+            <a href="#" onclick="logout()" class="logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+
     <!-- Scripts -->
-    <script src="dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
     <script src="doctor-data.js"></script>
+    <script src="dashboard.js"></script>
 </body>
 </html> 

@@ -2,6 +2,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     initializeDashboard();
     loadAppointments();
+    loadPatients();
+    initializeCalendar();
     setupEventListeners();
     updateNotifications();
 });
@@ -16,6 +18,328 @@ function initializeDashboard() {
     
     // Initialize date filter
     initializeDateFilter();
+    initializeTabButtons();
+}
+
+// Initialize Tab Buttons
+function initializeTabButtons() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            loadAppointmentsByTab(button.dataset.tab);
+        });
+    });
+}
+
+// Load Appointments by Tab
+function loadAppointmentsByTab(tab) {
+    const appointmentsGrid = document.getElementById('appointmentsGrid');
+    let filteredAppointments;
+    const today = new Date().toISOString().split('T')[0];
+
+    switch(tab) {
+        case 'today':
+            filteredAppointments = appointments.filter(apt => apt.date === today);
+            break;
+        case 'upcoming':
+            filteredAppointments = appointments.filter(apt => apt.date > today);
+            break;
+        case 'past':
+            filteredAppointments = appointments.filter(apt => apt.date < today);
+            break;
+        default:
+            filteredAppointments = appointments;
+    }
+
+    appointmentsGrid.innerHTML = '';
+    
+    if (filteredAppointments.length === 0) {
+        appointmentsGrid.innerHTML = `
+            <div class="no-appointments">
+                <i class="fas fa-calendar-check"></i>
+                <p>No ${tab} appointments found</p>
+            </div>
+        `;
+        return;
+    }
+
+    filteredAppointments.forEach(appointment => {
+        const appointmentCard = createAppointmentCard(appointment);
+        appointmentsGrid.appendChild(appointmentCard);
+    });
+}
+
+// Load Patients
+function loadPatients() {
+    const patientsGrid = document.getElementById('patientsGrid');
+    patientsGrid.innerHTML = '';
+
+    patients.forEach(patient => {
+        const patientCard = createPatientCard(patient);
+        patientsGrid.appendChild(patientCard);
+    });
+}
+
+// Create Patient Card
+function createPatientCard(patient) {
+    const card = document.createElement('div');
+    card.className = 'patient-card';
+    card.innerHTML = `
+        <div class="patient-header">
+            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(patient.name)}" alt="${patient.name}" class="patient-image">
+            <div>
+                <h4>${patient.name}</h4>
+                <p>${patient.age} years • ${patient.gender}</p>
+            </div>
+        </div>
+        <div class="patient-info">
+            <div class="info-item">
+                <i class="fas fa-tint"></i>
+                <span>${patient.bloodGroup}</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-phone"></i>
+                <span>${patient.phone}</span>
+            </div>
+        </div>
+        <div class="patient-actions">
+            <button class="action-btn view" onclick="viewPatient('${patient.id}')">
+                <i class="fas fa-eye"></i> View Details
+            </button>
+            <button class="action-btn" onclick="showNewAppointmentModal('${patient.id}')">
+                <i class="fas fa-calendar-plus"></i> New Appointment
+            </button>
+        </div>
+    `;
+    return card;
+}
+
+// Initialize Calendar
+function initializeCalendar() {
+    const calendarEl = document.getElementById('calendarWidget');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: appointments.map(apt => ({
+            title: apt.patientName,
+            start: `${apt.date}T${apt.time}`,
+            className: `status-${apt.status}`
+        })),
+        eventClick: function(info) {
+            const appointment = appointments.find(apt => 
+                apt.date === info.event.start.toISOString().split('T')[0] &&
+                apt.patientName === info.event.title
+            );
+            if (appointment) {
+                viewAppointment(appointment.id);
+            }
+        }
+    });
+    calendar.render();
+}
+
+// Modal Functions
+function showNewAppointmentModal(patientId = null) {
+    const modal = document.getElementById('appointmentModal');
+    const patientSelect = modal.querySelector('select[name="patientId"]');
+    
+    // Clear previous options
+    patientSelect.innerHTML = '<option value="">Select Patient</option>';
+    
+    // Add patient options
+    patients.forEach(patient => {
+        const option = document.createElement('option');
+        option.value = patient.id;
+        option.textContent = patient.name;
+        if (patientId === patient.id) {
+            option.selected = true;
+        }
+        patientSelect.appendChild(option);
+    });
+
+    modal.classList.add('active');
+}
+
+function showNewPatientModal() {
+    const modal = document.getElementById('patientModal');
+    modal.classList.add('active');
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.classList.remove('active');
+}
+
+// Save Functions
+function saveAppointment() {
+    const form = document.getElementById('appointmentForm');
+    const formData = new FormData(form);
+    
+    const appointment = {
+        id: `APT${Date.now()}`,
+        patientId: formData.get('patientId'),
+        patientName: patients.find(p => p.id === formData.get('patientId'))?.name,
+        date: formData.get('date'),
+        time: formData.get('time'),
+        type: formData.get('type'),
+        status: 'pending',
+        notes: formData.get('notes'),
+        patientImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(patients.find(p => p.id === formData.get('patientId'))?.name)}`
+    };
+
+    saveAppointmentToStorage(appointment);
+    closeModal('appointmentModal');
+    loadAppointments();
+    updateStatistics();
+}
+
+function savePatient() {
+    const form = document.getElementById('patientForm');
+    const formData = new FormData(form);
+    
+    const patient = {
+        id: `PAT${Date.now()}`,
+        name: formData.get('name'),
+        age: formData.get('age'),
+        gender: formData.get('gender'),
+        bloodGroup: formData.get('bloodGroup'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        address: formData.get('address'),
+        history: [],
+        upcomingAppointments: [],
+        pastAppointments: []
+    };
+
+    addPatient(patient);
+    closeModal('patientModal');
+    loadPatients();
+    updateStatistics();
+}
+
+// Profile and Notification Functions
+function toggleProfileMenu() {
+    const menu = document.getElementById('profileMenu');
+    menu.classList.toggle('active');
+}
+
+function toggleNotificationsPanel() {
+    const panel = document.getElementById('notificationsPanel');
+    panel.classList.toggle('active');
+    loadNotifications();
+}
+
+function loadNotifications() {
+    const notificationsList = document.querySelector('.notifications-list');
+    notificationsList.innerHTML = '';
+
+    notifications.forEach(notification => {
+        const notificationItem = document.createElement('div');
+        notificationItem.className = `notification-item ${notification.read ? 'read' : ''}`;
+        notificationItem.innerHTML = `
+            <div class="notification-icon ${notification.type}">
+                <i class="fas ${getNotificationIcon(notification.type)}"></i>
+            </div>
+            <div class="notification-content">
+                <p>${notification.message}</p>
+                <span>${notification.time}</span>
+            </div>
+            ${!notification.read ? `
+                <button class="mark-read-btn" onclick="markNotificationAsRead('${notification.id}')">
+                    <i class="fas fa-check"></i>
+                </button>
+            ` : ''}
+        `;
+        notificationsList.appendChild(notificationItem);
+    });
+}
+
+function getNotificationIcon(type) {
+    switch(type) {
+        case 'appointment':
+            return 'fa-calendar-check';
+        case 'reminder':
+            return 'fa-bell';
+        case 'alert':
+            return 'fa-exclamation-circle';
+        default:
+            return 'fa-info-circle';
+    }
+}
+
+function clearAllNotifications() {
+    notifications = [];
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+    loadNotifications();
+    updateNotifications();
+}
+
+// Profile Functions
+function viewProfile() {
+    // Implement view profile functionality
+    console.log('View profile');
+}
+
+function editProfile() {
+    // Implement edit profile functionality
+    console.log('Edit profile');
+}
+
+function viewSettings() {
+    // Implement view settings functionality
+    console.log('View settings');
+}
+
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        window.location.href = 'login.html';
+    }
+}
+
+// Setup Event Listeners
+function setupEventListeners() {
+    // Profile dropdown
+    const profileDropdown = document.querySelector('.profile-dropdown');
+    if (profileDropdown) {
+        profileDropdown.addEventListener('click', toggleProfileMenu);
+    }
+    
+    // Notifications
+    const notificationsBtn = document.querySelector('.notifications');
+    if (notificationsBtn) {
+        notificationsBtn.addEventListener('click', toggleNotificationsPanel);
+    }
+    
+    // Patient search
+    const patientSearch = document.getElementById('patientSearch');
+    if (patientSearch) {
+        patientSearch.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const patientCards = document.querySelectorAll('.patient-card');
+            
+            patientCards.forEach(card => {
+                const patientName = card.querySelector('h4').textContent.toLowerCase();
+                if (patientName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    // Close modals when clicking outside
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            closeModal(e.target.id);
+        }
+    });
 }
 
 // Update Profile Information
@@ -56,29 +380,6 @@ function updateStatistics() {
 function getTodayAppointments() {
     const today = new Date().toISOString().split('T')[0];
     return appointments.filter(apt => apt.date === today);
-}
-
-// Load Appointments
-function loadAppointments() {
-    const appointmentsList = document.querySelector('.appointments-list');
-    const todayAppointments = getTodayAppointments();
-    
-    appointmentsList.innerHTML = '';
-    
-    if (todayAppointments.length === 0) {
-        appointmentsList.innerHTML = `
-            <div class="no-appointments">
-                <i class="fas fa-calendar-check"></i>
-                <p>No appointments scheduled for today</p>
-            </div>
-        `;
-        return;
-    }
-    
-    todayAppointments.forEach(appointment => {
-        const appointmentCard = createAppointmentCard(appointment);
-        appointmentsList.appendChild(appointmentCard);
-    });
 }
 
 // Create Appointment Card
@@ -125,52 +426,6 @@ function initializeDateFilter() {
             // Implement date filter functionality
             console.log('Date filter clicked');
         });
-    }
-}
-
-// Setup Event Listeners
-function setupEventListeners() {
-    // Profile dropdown
-    const profileDropdown = document.querySelector('.profile-dropdown');
-    if (profileDropdown) {
-        profileDropdown.addEventListener('click', toggleProfileMenu);
-    }
-    
-    // Notifications
-    const notifications = document.querySelector('.notifications');
-    if (notifications) {
-        notifications.addEventListener('click', toggleNotificationsPanel);
-    }
-    
-    // View all appointments button
-    const viewAllBtn = document.querySelector('.view-all-btn');
-    if (viewAllBtn) {
-        viewAllBtn.addEventListener('click', () => {
-            window.location.href = '#appointments';
-        });
-    }
-}
-
-// Toggle Profile Menu
-function toggleProfileMenu() {
-    // Implement profile menu toggle
-    console.log('Toggle profile menu');
-}
-
-// Toggle Notifications Panel
-function toggleNotificationsPanel() {
-    // Implement notifications panel toggle
-    console.log('Toggle notifications panel');
-}
-
-// Update Notifications
-function updateNotifications() {
-    const badge = document.querySelector('.notification-badge');
-    const unreadCount = notifications.filter(n => !n.read).length;
-    
-    if (badge) {
-        badge.textContent = unreadCount;
-        badge.style.display = unreadCount > 0 ? 'block' : 'none';
     }
 }
 
