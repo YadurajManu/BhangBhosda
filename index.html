@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -490,6 +490,52 @@
             </div>
         </div>
     </footer>
+
+    <!-- Smooth Scroll Implementation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all links that have hash (#) in them
+            const links = document.querySelectorAll('a[href^="#"]');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Add active class for styling if needed
+                        links.forEach(link => link.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Smooth scroll to target
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Update URL without jumping
+                        window.history.pushState(null, '', targetId);
+                    }
+                });
+            });
+            
+            // Handle initial hash in URL
+            if (window.location.hash) {
+                const initialElement = document.querySelector(window.location.hash);
+                if (initialElement) {
+                    setTimeout(() => {
+                        initialElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 100);
+                }
+            }
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
